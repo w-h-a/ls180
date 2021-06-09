@@ -22,7 +22,7 @@ Let's not forget about the _relationship_ classes. In our example, the develops 
 
 _Second_, our schema is a _relational_ schema because it contains a database schema! In particular, for each class, the database schema contains a relation schema, which defines the set of attributes for the class. The relation schema itself is a (finitary) relation, of the form:
 
-> S({<set of identifiers>}, {<set of data types>}, {<set of constraints>})
+> S({set of identifiers}, {set of data types}, {set of constraints})
 
 What's going on here? Generally, _S_ takes a particular set of identifiers, a particular set of data types (e.g., `varchar(50)`, `boolean`, `decimal(8, 2))`, and a particular set of constraints (e.g., `unique`, `not null`) as input and yields a (usually proper) subset of the Cartesian product of the three sets. So, for example, the relation schema for _product_ is a particular subset of all possible ordered triples of:
 

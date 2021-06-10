@@ -12,7 +12,7 @@ Often in the domain of relational databases, Entity-Relationship-diagrams (ER di
 
 Our tech company description at least partially specifies a relational schema. But to create a full-blown relational schema of a tech company, we need to ensure that our relational schema consists of _three_ essential features.
 
-_First_, our relational schema must contain a set of _classes_. Let's denote these by '**I**'. The set **I** is typically and usefully partitioned into **E**, the set of entity classes, and **R**, the set of relationship classes. What are these? Here is a rough way of thinking about classes, generally (I'm happy to get more precise if the reader is interested):
+_First_, our relational schema must contain a set of _classes_. Let's denote these by '**I**'. The set **I** is typically and usefully partitioned into **E**, the set of entity classes, and **R**, the set of relationship classes. What are these? Here is a rough way of thinking about classes, generally:
 
 > A class of a property is the extension of the property. A class contains all and only individuals that have the property.
 

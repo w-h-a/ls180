@@ -6,7 +6,7 @@ From the [public Launch School material](https://launchschool.com/books/sql/read
 
 I realize the 'relation model' term comes from Codd. But, assuming I understand where Codd and the Launch School material are coming from, I believe the preferred term nowadays (at least in some circles) is 'relational schema' (which is not synonymous with 'relation schema', as we'll see). I think there are good reasons for this. Typically we think of models as being compared to some concrete system. But it's a bit strange to think of relational schemas as being compared to concrete systems, as they are just empty frameworks for scaffolding relational databases. Moreover, although 'model' is sometimes used to _prescribe_ as well as _describe_, I think 'schema' better connotes the idea that the purpose of a relational schema is first and foremost to _prescribe_ how we should structure and store our data of concrete systems. So, hereafter I drop the term 'relational model' in the hopes of making sense of relational schemas, database schemas, and relation schemas.
 
-Often in the domain of relational databases, Entity-Relationship-diagrams (ER diagrams) are used as descriptions of relational schemas. But ordinary English works as well. Here's an example:
+Often in the domain of relational databases, Entity-Relationship diagrams (ER diagrams) are used as descriptions of relational schemas. But ordinary English works as well. Here's an example:
 
 > A tech company consists of employees, products, and business-units. Employees have a salary and a skill-level, products are either successful or not, and business-units have revenue and either a tight budget or not. An employee can work on many products, and a product can be worked on by many employees. In addition, a business-unit can be funded by many products. However, a product funds at most one business-unit.
 
@@ -24,15 +24,15 @@ _Second_, our schema is a _relational_ schema because it contains a database sch
 
 > S({set of identifiers}, {set of data types}, {set of sets of constraints})
 
-What's going on here? Primarily, _S_ takes a particular set of identifiers and a particular set of data types (e.g., `varchar(50)`, `boolean`, `decimal(8, 2))` as input. But _S_ also takes a particular set of sets of constraints (e.g., {`unique`}, {`unique`, `not null`}, {`primary key`}) as input as well. _S_ yields a proper subset of the Cartesian product over the input sets. So, for example, the relation schema for _product_ is a particular subset of all possible ordered triples of:
+What's going on here? Primarily, _S_ takes a particular set of identifiers and a particular set of data types (e.g., `varchar(50)`, `boolean`, `decimal(8, 2))` as input. But _S_ also takes a particular set of sets of constraints (e.g., {`unique`}, {`unique`, `not null`}, {`primary key`}) as input as well. _S_ yields a proper subset of the Cartesian product over the input sets. So, for example, a relation schema for _product_ is a proper subset of all ordered triples of:
 
 > ({`id`, `name`, `market_success`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...})
 
-_That_ relation schema or subset of all possible ordered triples is:
+_That_ relation schema or proper subset of all ordered triples is:
 
 > P({`id`, `name`, `market_success`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...})
 
-Each such ordered triple in the above set is an attribute of _product_. We may say similar things about our other classes, including our relationship classes. For example, the relation schema for _funds_ is the subset of all possible ordered triples:
+Each such ordered triple in the above set is an attribute of _product_. We may say similar things about our other classes, including our relationship classes. For example, a relation schema for _funds_ is a proper subset of all ordered triples:
 
 > F({`id`, `product_id`, `business_unit_id`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...})
 

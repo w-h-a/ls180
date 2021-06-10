@@ -20,7 +20,7 @@ Consider first the _entity_ classes of our tech company. In this example, the em
 
 Let's not forget about the _relationship_ classes. In our example, the develops class and the funds class are the elements of **R**. The _develops_ class is an abstract object that is the extension of the concrete relation of _being an employee that develops a product at our tech company_. You may accordingly think of it as the set of all such employee-product pairs at our tech company. We may say similar things about the funds class (and the corresponding relation of _being a product that funds a business-unit at our tech company_).
 
-_Second_, our schema is a _relational_ schema because it contains a database schema! In particular, the database schema contains a relation schema for each class. Each relation schema specifies the set of attributes for the class. In other words, the relation schema _S_ yields a (finitary) relation:
+_Second_, our schema is a _relational_ schema because it contains a database schema! In particular, the database schema contains a relation schema for each class. Each relation schema specifies the set of attributes for the class. More precisely, the relation schema _S_ yields a (finitary) relation:
 
 > S({set of identifiers}, {set of data types}, {set of sets of constraints})
 

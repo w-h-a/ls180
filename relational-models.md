@@ -22,19 +22,19 @@ Let's not forget about the _relationship_ classes. In our example, the develops 
 
 _Second_, our schema is a _relational_ schema because it contains a database schema! In particular, the database schema contains a relation schema for each class. Each relation schema defines the set of attributes for the class. The relation schema itself is a (finitary) relation:
 
-> S({set of identifiers}, {set of data types}, {set of constraints})
+> S({set of identifiers}, {set of data types}, {set of sets of constraints})
 
-What's going on here? Generally, _S_ takes a particular set of identifiers, a particular set of data types (e.g., `varchar(50)`, `boolean`, `decimal(8, 2))`, and a particular set of constraints (e.g., `unique`, `not null`, `primary key`, `foreign key`) as input and yields a (usually proper) subset of the Cartesian product of the three sets. So, for example, the relation schema for _product_ is a particular subset of all possible ordered triples of:
+What's going on here? Primarily, _S_ takes a particular set of identifiers and a particular set of data types (e.g., `varchar(50)`, `boolean`, `decimal(8, 2))` as input. But _S_ also takes a particular set of sets of constraints (e.g., _{`unique`}, {`unique`, `not null`}, {`primary key`}_) as input as well. _S_ yields a proper subset of the Cartesian product over the input sets. So, for example, the relation schema for _product_ is a particular subset of all possible ordered triples of:
 
-> ({id, name, market_success}, {integer, boolean, varchar(20), ...}, {unique, not null, primary key, foreign key, ...})
+> ({`id`, `name`, `market_success`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...})
 
 _That_ relation schema or subset of all possible ordered triples is:
 
-> P({id, name, market_success}, {integer, boolean, varchar(20), ...}, {unique, not null, primary key, foreign key, ...})
+> P({`id`, `name`, `market_success`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...})
 
 Each such ordered triple in the above set is an attribute of _product_. We may say similar things about our other classes, including our relationship classes. For example, the relation schema for _funds_ is the subset of all possible ordered triples:
 
-> F({id, product_id, business_unit_id}, {integer, boolean, varchar(20), ...}, {unique, not null, primary key, foreign key, ...})
+> F({`id`, `product_id`, `business_unit_id`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...})
 
 The set of such ordered triples would be the attributes of _funds_.
 
@@ -60,9 +60,8 @@ card(funds, business-unit) = MANY;
 
 So, pulling all of this together, our relational schema is identical to the abstract object that contains a set of classes **I**, a database schema (or set of relation schemas), and a `card`.
 
-To put this into practice, let's walkthrough implementing a relational schema for the tech corporation in psql. Fire up psql and write:
+To put this into practice, let's walkthrough implementing a relational schema for the tech corporation in psql. Fire up psql. Create and connect to a `tech_comp` database. Our relational schema for our tech company database is such that the set of entity classes is composed of _employee_, _product_, and _business-unit_. We also know that we need a relation schema for each of those entity classes; so, let's start there. In particular, let's start with _employee_.
 
-```sql
-create database tech_comp;
-\c tech_comp
-```
+picture
+
+f

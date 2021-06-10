@@ -20,25 +20,25 @@ Consider first the _entity_ classes of our tech company. In this example, the em
 
 Let's not forget about the _relationship_ classes. In our example, the develops class and the funds class are the elements of **R**. The _develops_ class is an abstract object that is the extension of the concrete relation of _being an employee that develops a product at our tech company_. You may accordingly think of it as the set of all such employee-product pairs at our tech company. We may say similar things about the funds class (and the corresponding relation of _being a product that funds a business-unit at our tech company_).
 
-_Second_, our schema is a _relational_ schema because it contains a database schema! In particular, the database schema contains a relation schema for each class. Each relation schema defines the set of attributes for the class. The relation schema itself is a (finitary) relation:
+_Second_, our schema is a _relational_ schema because it contains a database schema! In particular, the database schema contains a relation schema for each class. Each relation schema specifies the set of attributes for the class. In other words, the relation schema _S_ yields a (finitary) relation:
 
 > S({set of identifiers}, {set of data types}, {set of sets of constraints})
 
-What's going on here? Primarily, _S_ takes a particular set of identifiers and a particular set of data types (e.g., `varchar(50)`, `boolean`, `decimal(8, 2))` as input. But _S_ also takes a particular set of sets of constraints (e.g., {`unique`}, {`unique`, `not null`}, {`primary key`}) as input as well. _S_ yields a proper subset of the Cartesian product over the input sets. So, for example, a relation schema for _product_ is a proper subset of all ordered triples of:
+What's going on here? Over a particular set of identifiers, a particular set of data types (e.g., `varchar(50)`, `boolean`, `decimal(8, 2))`, and a particular set of sets of constraints (e.g., {`unique`}, {`unique`, `not null`}, {`primary key`}), _S_ yields a proper subset of the Cartesian product over those three sets (i.e., a finitary relation). So, for example, a relation schema for _product_ yields a proper subset of all ordered triples of:
 
 > ({`id`, `name`, `market_success`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...})
 
-_That_ relation schema or proper subset of all ordered triples is:
+_That_ proper subset of all ordered triples is:
 
 > P({`id`, `name`, `market_success`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...})
 
-Each such ordered triple in the above set is an attribute of _product_. We may say similar things about our other classes, including our relationship classes. For example, a relation schema for _funds_ is a proper subset of all ordered triples:
+Each such ordered triple in the above set is an attribute of _product_. We may say similar things about our other classes, including our relationship classes. For example, a relation schema for _funds_ yields a proper subset of all ordered triples:
 
 > F({`id`, `product_id`, `business_unit_id`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...})
 
 The set of such ordered triples would be the attributes of _funds_.
 
-The _third_ ingredient of our _relational_ schema is that it contains a _cardinality_ function. To get a better idea of this, we need to be clear about functions. A `card` function ain't the loose sort of function in your code (unless your functional programming). A `card` function is a pure total function; it's a mathematical function. For example, a 2-place relation _Q_ is a unary total function whenever, for every argument _x_ of set _X_, there is a unique return value _y_ of set _Y_ such that _x_ is _Q_-related to _y_. More generally,
+The _third_ ingredient of our _relational_ schema is that it contains a _cardinality_ function. To get a better idea of this, let me be a bit more clear about functions. A 2-place relation _Q_ is a unary total function whenever, for every argument _x_ of set _X_, there is a unique return value _y_ of set _Y_ such that _x_ is _Q_-related to _y_. More generally,
 
 > An _n'_-place relation _Q_ is a total function with _n_-arity whenever, for all arguments _x1 of X1, ..., xn of Xn_, there is a unique return value _y_ of _Y_ such that _x1, ..., xn, y_ exemplify _Q_.
 

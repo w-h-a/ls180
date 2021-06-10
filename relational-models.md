@@ -24,25 +24,25 @@ _Second_, our schema is a _relational_ schema because it contains a database sch
 
 > S({set of identifiers}, {set of data types}, {set of constraints})
 
-What's going on here? Generally, _S_ takes a particular set of identifiers, a particular set of data types (e.g., `varchar(50)`, `boolean`, `decimal(8, 2))`, and a particular set of constraints (e.g., `unique`, `not null`) as input and yields a (usually proper) subset of the Cartesian product of the three sets. So, for example, the relation schema for _product_ is a particular subset of all possible ordered triples of:
+What's going on here? Generally, _S_ takes a particular set of identifiers, a particular set of data types (e.g., `varchar(50)`, `boolean`, `decimal(8, 2))`, and a particular set of constraints (e.g., `unique`, `not null`, `primary key`, `foreign key`) as input and yields a (usually proper) subset of the Cartesian product of the three sets. So, for example, the relation schema for _product_ is a particular subset of all possible ordered triples of:
 
-> {id, name, market_success}, {integer, boolean, varchar(20), ...}, {unique, not null, ...}
+> ({id, name, market_success}, {integer, boolean, varchar(20), ...}, {unique, not null, primary key, foreign key, ...})
 
-_That_ relation schema is:
+_That_ relation schema or subset of all possible ordered triples is:
 
-> P({id, name, market_success}, {integer, boolean, varchar(20), ...}, {unique, not null, ...})
+> P({id, name, market_success}, {integer, boolean, varchar(20), ...}, {unique, not null, primary key, foreign key, ...})
 
-Each such ordered triple is an attribute of _product_. We may say similar things about our other classes, including our relationship classes. For example, the relation schema for _funds_ is the subset of all possible ordered triples:
+Each such ordered triple in the above set is an attribute of _product_. We may say similar things about our other classes, including our relationship classes. For example, the relation schema for _funds_ is the subset of all possible ordered triples:
 
-> F({product_id, business_unit_id}, {integer, boolean, varchar(20), ...}, {unique, not null, ...})
+> F({id, product_id, business_unit_id}, {integer, boolean, varchar(20), ...}, {unique, not null, primary key, foreign key, ...})
 
 The set of such ordered triples would be the attributes of _funds_.
 
-The _third_ ingredient of our _relational_ schema is that it contains a _cardinality_ function. To get a better idea of this, we need to be clear about functions. The `card` function ain't the loose sort of function in your code. The `card` function is a total pure function; it's a mathematical function. For example, a 2-place relation _Q_ is a unary total function whenever, for every argument _x_ of set _X_, there is a unique return value _y_ of set _Y_ such that _x_ is _Q_-related to _y_. More generally,
+The _third_ ingredient of our _relational_ schema is that it contains a _cardinality_ function. To get a better idea of this, we need to be clear about functions. A `card` function ain't the loose sort of function in your code (unless your functional programming). A `card` function is a pure total function; it's a mathematical function. For example, a 2-place relation _Q_ is a unary total function whenever, for every argument _x_ of set _X_, there is a unique return value _y_ of set _Y_ such that _x_ is _Q_-related to _y_. More generally,
 
 > An _n'_-place relation _Q_ is a total function with _n_-arity whenever, for all arguments _x1 of X1, ..., xn of Xn_, there is a unique return value _y_ of _Y_ such that _x1, ..., xn, y_ exemplify _Q_.
 
-In our case, the `card` is a binary total function such that the first argument is any _R_ of **R**, and the second argument is one of _R_'s entity classes _E_. Given any two such arguments, there is a unique return value of the set _{ONE, MANY}_. The value returned depends on how many instances of _R_ within which _an_ instance of _E_ _can_ participate. For example,
+In our case, a `card` is a binary total function such that the first argument is any _R_ of **R**, and the second argument is one of _R_'s entity classes _E_. Given any two such arguments, there is a unique return value of the set _{ONE, MANY}_. The value returned depends on how many instances of _R_ within which _an_ instance of _E_ _can_ participate. Here's an example `card` (a `card` with a particular signature):
 
 ```text
 // an employee can participate in many instances of develops
@@ -58,7 +58,7 @@ card(funds, product) = ONE;
 card(funds, business-unit) = MANY;
 ```
 
-So, pulling all of this together, our relational schema is identical to the abstract object that contains a set of classes **I**, a database schema (or set of relation schemas), and `card`.
+So, pulling all of this together, our relational schema is identical to the abstract object that contains a set of classes **I**, a database schema (or set of relation schemas), and a `card`.
 
 To put this into practice, let's walkthrough implementing a relational schema for the tech corporation in psql. Fire up psql and write:
 

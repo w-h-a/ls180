@@ -145,9 +145,11 @@ To construct an _employee_ relation, we already know that we need to insert a su
 
 ![employeeRelation](employeeRelation.png)
 
-We can do something similar to construct our other relations in psql:
+We can do something similar to construct our other relations in psql. Here's our _product_ relation:
 
 ![productRelation](productRelation.png)
+
+As far as entity classes go, here's our final relation that correspond to an entity class:
 
 ![buRelation](buRelation.png)
 

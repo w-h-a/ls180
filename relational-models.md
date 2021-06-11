@@ -155,15 +155,15 @@ As far as entity classes go, here's our final relation that correspond to an ent
 
 To construct relations for _develops_ and _funds_, not only do we both (a) need a subset of the relevant Cartesian product, and (b) need to ensure it satisfies the relevant relation schema, but we also (c) should ensure that the relations adhere to our pre-specified cardinality constraints. For our _develops_ relation, we said it could be many-many. Here's an example that works with `name`s rather than `id`s:
 
-- {\<Paul, Case\>,
-- \<Quinn, Case\>,
-- \<Quinn, Adapter\>,
-- \<Quinn, Laptop\>,
-- \<Sally, Laptop\>,
-- \<Sally, Tablet\>,
-- \<Val, Tablet\>,
-- \<Val, Smartphone\>,
-- \<Roger, Laptop\>}
+- {\<'Paul', 'Case'\>,
+- \<'Quinn', 'Case'\>,
+- \<'Quinn', 'Adapter'\>,
+- \<'Quinn', 'Laptop'\>,
+- \<'Sally', 'Laptop'\>,
+- \<'Sally', 'Tablet'\>,
+- \<'Val', 'Tablet'\>,
+- \<'Val', 'Smartphone'\>,
+- \<'Roger', 'Laptop'\>}
 
 In psql, we have:
 
@@ -171,11 +171,11 @@ In psql, we have:
 
 On the other hand, for our _funds_ relation, we said it had to be one-many. Here's an example that works with `name`s rather than `id`s again:
 
-- {\<Case, Accessories\>,
-- \<Adapter, Accessories\>,
-- \<Laptop, Devices\>,
-- \<Tablet, Devices\>,
-- \<Smartphone, Devices\>},
+- {\<'Case', 'Accessories'\>,
+- \<'Adapter', 'Accessories'\>,
+- \<'Laptop', 'Devices'\>,
+- \<'Tablet', 'Devices'\>,
+- \<'Smartphone', 'Devices'\>},
 
 In psql, we have:
 
@@ -187,4 +187,4 @@ We finished our first relational database with psql and hopefully clarified a bu
 
 [1]: In this domain, 'attribute' is a technical term. Besides the fact that an attribute is an ordered triple, I haven't fully worked out the significance of 'attribute'. Suppose we have the following attribute: \<"`height`", `integer`, {`not null`}\>. Does this represent a kind of property, or does this represent a condition on properties? If the former is true, there is some _F_  that exemplifies _being a height property_. The height attribute would represent the property of _being a height property_. If the latter is true, _F_ is a height just in case the following conditions are satisfied: Φ. The height attribute would represent Φ.
 
-[2]: The term 'instance' is overloaded in the literature. Sometimes _relations_ are said to be 'instances of' a relation schema. But I think this not strictly correct. Relations might satisfy a relation schema, but I don't think they instantiate it. A relation satisfies a relation schema whenever, for each attribute, there is a unique element of every tuple of the relation that satisfies the data type and constraints of the attribute, and, for each element of every tuple of the relation, there is a unique attribute for which the element satisfies the data type and constraints of the attribute. There must be a one-to-one correspondence between an attribute and an element of each tuple of the relation. I think it is best to save the 'instance' talk for class instantiations. An _item_ is an instance of class _G_ whenever the item is a _G_. For example, Paul is an instance of _employee_ just in case Paul exemplifies the property of _being an employee entity_. Furthermore, \<Tablet, Devices\> is an instance of _funds_ just in case \<Tablet, Devices\> exemplifies the property of _being a funds relationship_.
+[2]: The term 'instance' is overloaded in the literature. Sometimes _relations_ are said to be 'instances of' a relation schema. But I think this not strictly correct. Relations might satisfy a relation schema, but I don't think they instantiate it. A relation satisfies a relation schema whenever, for each attribute, there is a unique element of every tuple of the relation that satisfies the data type and constraints of the attribute, and, for each element of every tuple of the relation, there is a unique attribute for which the element satisfies the data type and constraints of the attribute. There must be a one-to-one correspondence between an attribute and an element of each tuple of the relation. I think it is best to save the 'instance' talk for class instantiations. An _item_ is an instance of class _G_ whenever the item is a _G_. For example, Paul is an instance of _employee_ just in case Paul exemplifies the property of _being an employee entity_. Furthermore, \<Tablet, Devices\> is an instance of _funds_ just in case \<Tablet, Devices\> exemplifies the property of _being a funds relationship_. Finally, note that the ordinary relation \<Tablet, Devices\> is represented by \<'Tablet', 'Devices'\> in psql. But \<'Tablet', 'Devices'\> is, of course, not identical to \<Tablet, Devices\>. The same can be said about ordinary entity instance Paul versus Paul's representation---'Paul'--- in psql. I think it's important to be clear about our referents. The instance of a class is not a string, word, noun, verb, or any such thing! 

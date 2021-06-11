@@ -57,7 +57,7 @@ To put this into practice, let's walkthrough implementing a relational schema fo
 
 In psql, we have:
 
-picture
+![employee](createEmployee.png)
 
 Now, let's implement the following relation schema for _product_.
 
@@ -69,7 +69,7 @@ Now, let's implement the following relation schema for _product_.
 
 In psql, we have:
 
-picture
+![product](createProduct.png)
 
 Finally, let's implement the following relation schema for _business-unit_.
 
@@ -82,7 +82,7 @@ Finally, let's implement the following relation schema for _business-unit_.
 
 In psql, we have:
 
-picture
+![businessUnit](createBU.png)
 
 That's all there is to implementing our relation schemas for our entity classes in accordance with our pre-defined relational schema. Now let's implement the relation schemas for our relationship classes: _develops_ and _funds_. Let's implement the following relation schema for _develops_.
 
@@ -94,7 +94,7 @@ That's all there is to implementing our relation schemas for our entity classes 
 
 In psql, we have:
 
-picture
+![develops](createDevelops.png)
 
 Moreover, let's implement the following relation schema for _funds_.
 
@@ -106,7 +106,7 @@ Moreover, let's implement the following relation schema for _funds_.
 
 In psql, we have:
 
-picture
+![funds](createFunds.png)
 
 As far as our relational schema goes, the only thing left to implement is a `card` function. We don't do that in psql, but it is a good idea to have a complete relational schema before constructing an instance[*] of our database schema willy-nilly (especially when we come to constructing instances of the relation schemas for our relationship classes). So, let's specify a `card`. Here's the `card` we'll use:
 

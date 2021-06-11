@@ -173,7 +173,7 @@ On the other hand, for our _funds_ relation, we said it had to be one-many. Here
 - \<Adapter, Accessories\>,
 - \<Laptop, Devices\>,
 - \<Tablet, Devices\>,
-- \<Smartphone, Devices\>,
+- \<Smartphone, Devices\>},
 
 In psql, we have:
 

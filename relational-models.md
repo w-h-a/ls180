@@ -130,4 +130,4 @@ f
 
 --------
 
-[*]: The term 'instance' is sometimes ambiguous in the literature, but context is usually suffices to pinpoint the referent of the term. A _relation_ is an instance of a relation schema whenever it satisfies the pattern laid out by the relation schema. On the other hand, an _individual_ is an instance of class _F_ whenever the individual exemplifies _F_.
+[*]: The term 'instance' is sometimes ambiguous in the literature, but context is usually suffices to pinpoint the referent of the term. A _relation_ is an instance of a relation schema whenever it satisfies the pattern laid out by the relation schema. An _item_ (of type _i_) is an instance of class _G_ whenever the item is an _G_ (where _G_ is of type _\<i\>_). E.g., Paul is an instance of _employee_ just in case Paul exemplifies being an employee. An _item_ (of type _\<i, i\>_) is an instance of class _G_ whenever the item is an _G_ (where _G_ is of type _\<\<i, i\>\>_). E.g., _r_ is an instance of _funds_ just in case _r_ exemplifies being a funds. The terminology is admittedly unfortunate.

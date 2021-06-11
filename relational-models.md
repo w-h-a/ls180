@@ -108,9 +108,9 @@ In psql, we have:
 
 picture
 
-As far as our relational schema goes, the only thing left to implement is a `card` function. We don't do that in psql, but it is a good idea to have a complete relational schema before constructing an instance[^*] of our database schema willy-nilly (especially when we come to constructing instances of the relation schemas for our relationship classes). So, let's specify a `card`. Here's the `card` we'll use:
+As far as our relational schema goes, the only thing left to implement is a `card` function. We don't do that in psql, but it is a good idea to have a complete relational schema before constructing an instance[^1] of our database schema willy-nilly (especially when we come to constructing instances of the relation schemas for our relationship classes). So, let's specify a `card`. Here's the `card` we'll use:
 
-[^*]: The term 'instance' is sometimes ambiguous in the literature, but context is usually suffices to pinpoint the referent of the term. A _relation_ is an instance of a relation schema whenever it satisfies the pattern laid out by the relation schema. On the other hand, an _individual_ is an instance of class _F_ whenever the individual exemplifies _F_.
+[^1]: The term 'instance' is sometimes ambiguous in the literature, but context is usually suffices to pinpoint the referent of the term. A _relation_ is an instance of a relation schema whenever it satisfies the pattern laid out by the relation schema. On the other hand, an _individual_ is an instance of class _F_ whenever the individual exemplifies _F_.
 
 ```text
 // an employee can participate in many instances of develops

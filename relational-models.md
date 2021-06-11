@@ -1,8 +1,10 @@
 ## It's Schemas All The Way Down...Until It Ain't!
 
+#### Comprehending Schema Concepts
+
 From the [public Launch School material](https://launchschool.com/books/sql/read/introduction):
 
-> In simple terms, the relational model defines a set of relations (which [are represented by] tables) and describes the relationships, or connections, between them [...] to determine how the data stored in them can interact.
+> In simple terms, the relational model defines a set of relations (which we can think of as analogous to tables) and describes the relationships, or connections, between them in order to determine how the data stored in them can interact.
 
 I realize the 'relation model' term comes from Codd. But, assuming I understand where Codd and the Launch School material are coming from, I believe the preferred term nowadays (at least in some circles) is 'relational schema' (which is not synonymous with 'relation schema', as we'll see). I think there are good reasons for this. Typically we think of models as being compared to some concrete system. But it's a bit strange to think of relational schemas as being compared to concrete systems, as they are just empty frameworks for scaffolding relational databases. Moreover, although 'model' is sometimes used to _prescribe_ as well as _describe_, I think 'schema' better connotes the idea that the purpose of a relational schema is first and foremost to _prescribe_ how we should structure and store our data of concrete systems. So, hereafter I drop the term 'relational model' in the hopes of making sense of relational schemas, database schemas, and relation schemas.
 
@@ -22,19 +24,19 @@ Let's not forget about the _relationship_ classes. In our example, the develops 
 
 _Second_, our schema is a _relational_ schema because it contains a database schema! In particular, the database schema contains a relation schema for each class. Each relation schema specifies the set of attributes for the class. More precisely, the relation schema _S_ yields a (finitary) relation:
 
-> S({set of identifiers}, {set of data types}, {set of sets of constraints})
+> S({\<x, y, Z\> | x is of a set of identifiers, y is of a set of data types, and Z is of a set of sets of constraints})
 
-What's going on here? Over a particular set of identifiers, a particular set of data types (e.g., `varchar(50)`, `boolean`, `decimal(8, 2))`, and a particular set of sets of constraints (e.g., {`unique`}, {`unique`, `not null`}, {`primary key`}), _S_ yields a proper subset of the Cartesian product over those three sets (i.e., a finitary relation). So, for example, a relation schema for _product_ yields a proper subset of all ordered triples of:
+What's going on here? Over the Cartesian product of a particular set of identifiers, a particular set of data types (e.g., `varchar(50)`, `boolean`, `decimal(8, 2))`, and a particular set of sets of constraints (e.g., {`unique`}, {`unique`, `not null`}, {`primary key`}), _S_ yields a proper subset of the Cartesian product (i.e., a finitary relation). So, for example, a relation schema for _product_ yields a proper subset of all ordered triples of:
 
-> ({`id`, `name`, `market_success`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...})
+> {\<x, y, Z\> | x is of {`id`, `name`, `market_success`}, y is of {`integer`, `boolean`, `varchar(20)`, ...}, and Z is of {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...}}
 
 _That_ proper subset of all ordered triples is:
 
-> P({`id`, `name`, `market_success`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...})
+> P({\<x, y, Z\> | x is of {`id`, `name`, `market_success`}, y is of {`integer`, `boolean`, `varchar(20)`, ...}, and Z is of {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...}})
 
 Each such ordered triple in the above set is an attribute of _product_. We may say similar things about our other classes, including our relationship classes. For example, a relation schema for _funds_ yields a proper subset of all ordered triples:
 
-> F({`id`, `product_id`, `business_unit_id`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...})
+> F({\<x, y, Z\> | x is of {`id`, `product_id`, `business_unit_id`}, y is of {`integer`, `boolean`, `varchar(20)`, ...}, and Z is of {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...}})
 
 The set of such ordered triples would be the attributes of _funds_.
 
@@ -44,16 +46,24 @@ The _third_ ingredient of our _relational_ schema is that it contains a _cardina
 
 In our case, a `card` is a binary total function such that the first argument is any _R_ of **R**, and the second argument is one of _R_'s entity classes _E_. Given any two such arguments, there is a unique return value of the set _{ONE, MANY}_. The value returned depends on how many instances of _R_ within which _an_ instance of _E_ _can_ participate.
 
-So, pulling all of this together, our relational schema is identical to the abstract object that contains a set of classes **I**, a database schema (or set of relation schemas), and a `card`.
+So, pulling all of this together, our relational schema is identical to the abstract object that contains a set of classes **I**, a database schema (or set of relation schemas), and a `card`. Let's come back to the quote we began with:
 
-To put this into practice, let's walkthrough implementing a relational schema for the tech corporation in psql. Fire up psql. Create and connect to a `tech_comp` database. Our relational schema for our tech company database is such that the set of entity classes is composed of _employee_, _product_, and _business-unit_. We know that we need a relation schema for each of those entity classes; so, let's start there. Let's implement the following relation schema for _employee_.
+> In simple terms, the relational model defines a set of relations (which we can think of as analogous to tables) and describes the relationships, or connections, between them in order to determine how the data stored in them can interact.
 
-> E({`id`, `name`, `salary`, `skill_level`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...}) =
+Given the above, I'd rewrite this as:
 
-- {(`id`, `integer`, {`generated by default as identity`, `primary key`}),
-- (`name`, `varchar(50)`, {`not null`}),
-- (`salary`, `decimal(8, 2)`, {`not null`}),
-- (`skill_level`, `varchar(20)`, {`not null`})}
+> The relational schema (1) contains a set of entity classes and relationship classes of a system of interest, (2) defines a relation schema (which, as with the relations that satisfy a relation schema, can be represented by a table) for each entity and relationship class, and (3) describes the cardinality of the relationships between entities. The relational schema allows us to better organize and structure our databases on the system of interest.
+
+#### Implementing Our Relational Schema In PSQL
+
+Now to put this understanding into practice, let's walkthrough implementing a relational schema for the tech corporation in psql. Fire up psql. Create and connect to a `tech_comp` database. Our relational schema for our tech company database is such that the set of entity classes is composed of _employee_, _product_, and _business-unit_. We know that we need a relation schema for each of those entity classes; so, let's start there. Let's implement the following relation schema for _employee_.
+
+> E({\<x, y, Z\> | x is of {`id`, `name`, `salary`, `skill_level`}, y is of {`integer`, `boolean`, `varchar(20)`, ...}, and Z is of {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...}}) =
+
+- {\<`id`, `integer`, {`generated by default as identity`, `primary key`}\>,
+- \<`name`, `varchar(50)`, {`not null`}\>,
+- \<`salary`, `decimal(8, 2)`, {`not null`}\>,
+- \<`skill_level`, `varchar(20)`, {`not null`}\>}
 
 In psql, we have:
 
@@ -61,11 +71,9 @@ In psql, we have:
 
 Now, let's implement the following relation schema for _product_.
 
-> P({`id`, `name`, `market_success`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...}) =
-
-- {(`id`, `integer`, {`generated by default as identity`, `primary key`}),
-- (`name`, `varchar(50)`, {`not null`}),
-- (`market_success`, `boolean`, {`not null`})}
+- {\<`id`, `integer`, {`generated by default as identity`, `primary key`}\>,
+- \<`name`, `varchar(50)`, {`not null`}\>,
+- \<`market_success`, `boolean`, {`not null`}\>}
 
 In psql, we have:
 
@@ -73,12 +81,10 @@ In psql, we have:
 
 Finally, let's implement the following relation schema for _business-unit_.
 
-> BU({`id`, `name`, `revenue`, `tight_budget`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...}) =
-
-- {(`id`, `integer`, {`generated by default as identity`, `primary key`}),
-- (`name`, `varchar(50)`, {`not null`}),
-- (`revenue_in_mill`, `decimal(5, 2)`, {`not null`}),
-- (`tight_budget`, `boolean`, {`not null`})}
+- {\<`id`, `integer`, {`generated by default as identity`, `primary key`}\>,
+- \<`name`, `varchar(50)`, {`not null`}\>,
+- \<`revenue_in_mill`, `decimal(5, 2)`, {`not null`}\>,
+- \<`tight_budget`, `boolean`, {`not null`}\>}
 
 In psql, we have:
 
@@ -86,11 +92,9 @@ In psql, we have:
 
 That's all there is to implementing our relation schemas for our entity classes in accordance with our pre-defined relational schema. Now let's implement the relation schemas for our relationship classes: _develops_ and _funds_. Let's implement the following relation schema for _develops_.
 
-> D({`id`, `employee_id`, `product_id`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...}) =
-
-- {(`id`, `integer`, {`generated by default as identity`, `primary key`}),
-- (`employee_id`, `integer`, {`foreign key references employee(id)`, `on delete cascade`}),
-- (`product_id`, `integer`, {`foreign key references product(id)`, `on delete cascade`})}
+- {\<`id`, `integer`, {`generated by default as identity`, `primary key`}\>,
+- \<`employee_id`, `integer`, {`foreign key references employee(id)`, `on delete cascade`}\>,
+- \<`product_id`, `integer`, {`foreign key references product(id)`, `on delete cascade`}\>}
 
 In psql, we have:
 
@@ -98,11 +102,9 @@ In psql, we have:
 
 Moreover, let's implement the following relation schema for _funds_.
 
-> F({`id`, `product_id`, `business_unit_id`}, {`integer`, `boolean`, `varchar(20)`, ...}, {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...}) =
-
-- {(`id`, `integer`, {`generated by default as identity`, `primary key`}),
-- (`product_id`, `integer`, {`foreign key references product(id)`, `on delete cascade`}),
-- (`business_unit_id`, `integer`, {`foreign key references business_unit(id)`, `on delete cascade`})}
+- {\<`id`, `integer`, {`generated by default as identity`, `primary key`}\>,
+- \<`product_id`, `integer`, {`foreign key references product(id)`, `on delete cascade`}\>,
+- \<`business_unit_id`, `integer`, {`foreign key references business_unit(id)`, `on delete cascade`}\>}
 
 In psql, we have:
 
@@ -125,6 +127,21 @@ card(funds, business-unit) = MANY;
 ```
 
 So, the _develops_ relationship between _employee_ and _product_ is many-many, and the _funds_ relationship between _product_ and _business-unit_ is one-many.
+
+#### Beyond Schemas
+
+Now that we've implementing a schema of our tech company in psql, let's go ahead and construct some relations for each item class in psql. Here are two criteria for our relations:
+
+1. Each relation _must_ satisfy its corresponding relation schema, and
+2. The relations of relationship classes _should_ adhere to the cardinality constraints of our relational schema.
+
+Let's start by creating a relation for _employee_. In abstract, to satisfy our employee relation schema, we need a proper subset of all ordered quadruples that satisfies our employee schema. That is, we need a proper subset of all ordered quadruples:
+
+> {\<w, x, y, z\> | w is of {set of ids}, x is of {set of names}, y is of {set of salaries}, z is of {set of skill-levels}}
+
+But we also need to ensure, for example, that each `name` is no longer than 50 characters but not null, and that each `salary` is not null but a decimal with 8 precision and 2 scale. Here's an example of the right kind of relation in psql:
+
+picture
 
 f
 

@@ -44,23 +44,23 @@ A relation schema for _product_, in turn, would be a proper subset of that Carte
 
 The set of such ordered triples would be the attributes of _funds_.
 
-The _third_ ingredient of our _relational_ schema is that it contains some cardinality constraints, which are given by a function. To get a better idea of this, let me be a bit more clear about functions. A 2-place relation _Q_ (over sets) is a unary total function whenever, for every argument _x_ of set _X_, there is a unique return value _y_ of set _Y_ such that _x_ is _Q_-related to _y_. More generally,
+The _third_ ingredient of our _relational_ schema is that it contains some cardinality constraints, which are given by a function. To get a better idea of this, let me be a bit more precise about functions. A 2-place relation _Q_ (over sets) is a unary total function whenever, for every argument _x_ of set _X_, there is a unique return value _y_ of set _Y_ such that _x_ is _Q_-related to _y_. More generally,
 
 > An _n'_-place relation _Q_ is a total function with _n_-arity whenever, for all arguments _x1 of X1, ..., xn of Xn_, there is a unique return value _y_ of _Y_ such that _x1, ..., xn, y_ exemplify _Q_.
 
-In our case, a `card` function is a binary total function such that the first argument is any _R_ of **R**, and the second argument is one of _R_'s entity classes _E_. Given any two such arguments, there is a unique return value of the set _{ONE, MANY}_. The value returned depends on how many instances of _R_ within which _an_ instance of _E_ _can_ participate. Hence a `card` gives us our relational schema's cardinality constraints.
+In our case, a `card` function is a binary total function such that the first argument is any _R_ of **R**. The second argument is one of _R_'s entity classes _E_. Given any two such arguments, there is a unique return value of the set _{ONE, MANY}_. The value returned depends on how many instances of _R_ within which _an_ instance of _E_ _can_ participate. Hence a `card` gives us our relational schema's cardinality constraints.
 
-Pulling all of this together, our relational schema is identical to the abstract object that contains a set of classes **I**, a database schema (or set of relation schemas), and a `card`. Let's come back to the quote we began with:
+In sum, our relational schema is identical to the abstract object that contains a set of classes **I**, a database schema (or set of relation schemas), and a `card`. Let's come back to the quote we began with:
 
 > In simple terms, the relational model defines a set of relations (which we can think of as analogous to tables) and describes the relationships, or connections, between them in order to determine how the data stored in them can interact.
 
 Given the above, I'd rewrite this as:
 
-> The relational schema (1) contains a set of entity classes and relationship classes, (2) defines a relation schema (which, as with the relations that satisfy a relation schema, can be represented by a table) for each entity and relationship class, and (3) describes the cardinality of the relationships between entities. The relational schema allows us to better organize and structure our databases of the system of interest.
+> The relational schema (1) contains a set of entity classes and relationship classes, (2) defines a relation schema (which, as with the relations that satisfy a relation schema, can be represented by a table) for each entity and relationship class, and (3) describes the cardinality of the relationships between entities. The relational schema better allows us to organize and structure our databases of the system of interest.
 
 #### Implementing Our Relational Schema In PSQL
 
-To put this understanding into practice, let's walkthrough implementing a relational schema for a relational database of the tech corporation in psql. Fire up psql. Create and connect to a `tech_comp` database. Our relational schema for our tech company database is such that the set of entity classes is composed of _employee_, _product_, and _business-unit_. We know that we need a relation schema for each of those entity classes. Starting with _employee_, the _employee_ relation schema must pick out a proper subset of all the ordered triples {\<_x_, _y_, _Z_\>}, where _x_ is of {"`id`", "`name`", "`salary`", "`skill_level`"}, _y_ is of {`integer`, `boolean`, `varchar(20)`, ...}, and _Z_ is of {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...}}. Let's suppose the _employee_ relation schema picks the following proper subset of all such ordered triples:
+To put this understanding into practice, let's walk through implementing a relational schema for a relational database of the tech corporation in psql. Fire up psql. Create and connect to a `tech_comp` database. Our relational schema for our tech company database is such that the set of entity classes is composed of _employee_, _product_, and _business-unit_. We know that we need a relation schema for each of those entity classes. Starting with _employee_, the _employee_ relation schema must pick out a proper subset of all the ordered triples {\<_x_, _y_, _Z_\>}, where _x_ is of {"`id`", "`name`", "`salary`", "`skill_level`"}, _y_ is of {`integer`, `boolean`, `varchar(20)`, ...}, and _Z_ is of {{`unique`}, {`unique`, `not null`}, ..., {`primary key`}, ...}}. Let's suppose the _employee_ relation schema picks the following proper subset of all such ordered triples:
 
 - {\<"`id`", `integer`, {`generated by default as identity`, `primary key`}\>,
 - \<"`name`", `varchar(50)`, {`not null`}\>,
@@ -92,7 +92,7 @@ In psql, we have:
 
 ![businessUnit](createBU.png)
 
-That's all there is to implementing our relation schemas for our entity classes in accordance with our pre-defined relational schema. Now let's implement the relation schemas for our relationship classes: _develops_ and _funds_. Let's assume our _develops_ relation schema yields:
+That's all there is to implementing our relation schemas for our entity classes following our pre-defined relational schema. Now let's implement the relation schemas for our relationship classes: _develops_ and _funds_. Let's assume our _develops_ relation schema yields:
 
 - {\<"`id`", `integer`, {`generated by default as identity`, `primary key`}\>,
 - \<"`employee_id`", `integer`, {`foreign key references employee(id)`, `on delete cascade`}\>,
@@ -132,7 +132,7 @@ So, the _develops_ relationship between _employee_ and _product_ is many-many, a
 
 #### Beyond Schemas
 
-Now that we've specified a relational schema for a model or database of our tech company, let's go ahead and construct some relations for each item class in psql. Here are two criteria for our relations:
+Now that we've specified a relational schema for our tech company's model or database let's go ahead and construct some relations for each item class in psql. Here are two criteria for our relations:
 
 1. Each relation _must_ satisfy its corresponding relation schema, and
 2. The relations of relationship classes _should_ adhere to the cardinality constraints of our relational schema.
@@ -141,7 +141,7 @@ Let's start by creating a relation for _employee_. We have four sets of values:
 
 > {sets of ids}, {sets of names}, {sets of salaries}, {sets of skill-levels}
 
-To construct an _employee_ relation, we need to insert a subset of all such ordered quadruples. But to ensure that our _employee_ relation satisfies our _employee_ relation schema, we also need to make sure, for example, that each `name` is no longer than 50 characters but not null, and that each `salary` is not null but a decimal with 8 precision and 2 scale. Here's an example of the right kind of relation in psql:
+To construct an _employee_ relation, we already know that we need to insert a subset of all such ordered quadruples. But we also know that we need our _employee_ relation to satisfy our _employee_ relation schema. We need to make sure, for example, that each `name` is no longer than 50 characters but not null and that each `salary` is not null but a decimal with 8 precision and 2 scale. Here's an example of the right kind of relation in psql:
 
 picture
 
@@ -149,6 +149,6 @@ f
 
 --------
 
-[1]: In this domain 'attribute' is a technical term. Other than the fact that an attribute is an ordered triple, I haven't fully worked out the significance of 'attribute'. Suppose we have the following attribute: \<"`height`", `integer`, {`not null`}\>. Does this represent a kind of property, or does this represent a condition on properties? If the former is true, then we should be able to say _F_ exemplifies _being a height property_. The height attribute would represent the property of _being a height property_. If the latter is true, then we should be able to say _F_ is a height just in case the following conditions are satisfied: Φ. The height attribute would represent Φ.
+[1]: In this domain, 'attribute' is a technical term. Besides the fact that an attribute is an ordered triple, I haven't fully worked out the significance of 'attribute'. Suppose we have the following attribute: \<"`height`", `integer`, {`not null`}\>. Does this represent a kind of property, or does this represent a condition on properties? If the former is true, there is some _F_  that exemplifies _being a height property_. The height attribute would represent the property of _being a height property_. If the latter is true, _F_ is a height just in case the following conditions are satisfied: Φ. The height attribute would represent Φ.
 
 [2]: The term 'instance' is overloaded in the literature. Sometimes _relations_ are said to be 'instances of' a relation schema. But I think this not strictly correct. Relations might satisfy a relation schema, but I don't think they instantiate it. A relation satisfies a relation schema whenever, for each attribute, there is a unique element of every tuple of the relation that satisfies the data type and constraints of the attribute, and, for each element of every tuple of the relation, there is a unique attribute for which the element satisfies the data type and constraints of the attribute. There must be a one-to-one correspondence between an attribute and an element of each tuple of the relation. I think it is best to save the 'instance' talk for class instantiations. An _item_ is an instance of class _G_ whenever the item is a _G_. For example, Paul is an instance of _employee_ just in case Paul exemplifies the property of _being an employee entity_. Furthermore, \<Tablet, Devices\> is an instance of _funds_ just in case \<Tablet, Devices\> exemplifies the property of _being a funds relationship_.

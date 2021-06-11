@@ -155,8 +155,8 @@ To construct relations for _develops_ and _funds_, not only do we both (a) need 
 
 - {\<Paul, Case\>,
 - \<Quinn, Case\>,
+- \<Quinn, Adapter\>,
 - \<Quinn, Laptop\>,
-- \<Quinn, Tablet\>,
 - \<Sally, Laptop\>,
 - \<Sally, Tablet\>,
 - \<Val, Tablet\>,

@@ -143,17 +143,17 @@ Let's start by creating a relation for _employee_. We have four sets of values:
 
 To construct an _employee_ relation, we already know that we need to insert a subset of all such ordered quadruples. But we also know that we need our _employee_ relation to satisfy our _employee_ relation schema. We need to make sure, for example, that each `name` is no longer than 50 characters but not null and that each `salary` is not null but a decimal with 8 precision and 2 scale (for all such constraints, scroll back up to our _employee_ relation schema). Here's an example of the right kind of relation in psql:
 
-![funds](createFunds.png)
+![employeeRelation](employeeRelation.png)
 
 We can do something similar for our other relations in psql:
 
-picture
+![productRelation](productRelation.png)
 
-pciture
+![buRelation](buRelation.png)
 
-pciture
+![developsRelation](developsRelation.png)
 
-picture
+![fundsRelation](fundsRelation.png)
 
 f
 

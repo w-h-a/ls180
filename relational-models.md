@@ -145,17 +145,41 @@ To construct an _employee_ relation, we already know that we need to insert a su
 
 ![employeeRelation](employeeRelation.png)
 
-We can do something similar for our other relations in psql:
+We can do something similar to construct our other relations in psql:
 
 ![productRelation](productRelation.png)
 
 ![buRelation](buRelation.png)
 
+To construct relations for _develops_ and _funds_, not only do we both (a) need a subset of the relevant Cartesian product, and (b) need to ensure it satisfies the relevant relation schema, but we also (c) should ensure that the relations adhere to our pre-specified cardinality constraints. For our _develops_ relation, we said it could be many-many. Here's an example that works with `name`s rather than `id`s:
+
+- {\<Paul, Case\>,
+- \<Quinn, Case\>,
+- \<Quinn, Laptop\>,
+- \<Quinn, Tablet\>,
+- \<Sally, Laptop\>,
+- \<Sally, Tablet\>,
+- \<Val, Tablet\>,
+- \<Val, Smartphone\>,
+- \<Roger, Laptop\>}
+
+In psql, we have:
+
 ![developsRelation](developsRelation.png)
+
+On the other hand, for our _funds_ relation, we said it had to be one-many. Here's an example that works with `name`s rather than `id`s again:
+
+- {\<Case, Accessories\>,
+- \<Adapter, Accessories\>,
+- \<Laptop, Devices\>,
+- \<Tablet, Devices\>,
+- \<Smartphone, Devices\>,
+
+In psql, we have:
 
 ![fundsRelation](fundsRelation.png)
 
-f
+We finished our first relational database with psql and hopefully clarified a bunch of concepts along the way! Hooray!
 
 --------
 

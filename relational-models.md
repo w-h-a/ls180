@@ -112,7 +112,7 @@ In psql, we have:
 
 ![funds](createFunds.png)
 
-As far as our relational schema goes, the only thing left to implement is a `card` function. We don't do that in psql, but it is a good idea to have a complete relational schema before constructing relations that satisfy our database schema willy-nilly. So, let's specify a `card`. Here's the `card` we'll use:
+As far as our relational schema goes, the only thing left to implement is a `card` function. It is a good idea to have a complete relational schema before constructing relations that satisfy our database schema willy-nilly. So, let's specify a `card`. Here's the `card` we'll use:
 
 ```text
 // an employee can participate in many instances of develops
@@ -128,7 +128,7 @@ card(funds, product) = ONE;
 card(funds, business-unit) = MANY;
 ```
 
-So, the _develops_ relationship between _employee_ and _product_ is many-many, and the _funds_ relationship between _product_ and _business-unit_ is one-many.[3]
+So, the _develops_ relationship between _employee_ and _product_ is many-many, and the _funds_ relationship between _product_ and _business-unit_ is one-many.[3] In psql...TODO
 
 #### Beyond Schemas
 

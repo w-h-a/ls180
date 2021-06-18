@@ -43,7 +43,7 @@ To add to our relations, let's insert some more data in accordance with Launch's
     - `INSERT INTO books_categories VALUES (5, 4);`
     - `INSERT INTO books (title, author) VALUES ('Vij''s: Elegant and Inspired Indian Cuisine', 'Meeru Dhalwala and Vikram Vij');`
     - `INSERT INTO categories (name) VALUES ('Cookbook');`
-    - `INSERT INTO categories (name) VALUES ('South Asia');``
+    - `INSERT INTO categories (name) VALUES ('South Asia');`
     - `INSERT INTO books_categories VALUES (6, 1);`
     - `INSERT INTO books_categories VALUES (6, 8);`
     - `INSERT INTO books_categories VALUES (6, 9);`

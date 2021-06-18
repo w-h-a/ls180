@@ -1,7 +1,7 @@
 Here's my step-by-step walk through for assignment 8.
 
 PART I
-1. After making a database for assignment 7, I imported the required file.
+1. After making a database for assignment 8, I imported the required file.
 2. I checked the relation list. We seem to have an implicit _me_ entity singleton class, an explicit _contact_ entity class, and a _calls_ relationship class. Let's get to it!
 3. I needed to create a conceptual schema before continuing.
   - The entity classes are:
